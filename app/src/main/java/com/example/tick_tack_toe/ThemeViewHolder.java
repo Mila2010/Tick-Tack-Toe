@@ -12,12 +12,12 @@ import android.widget.TextView;
  */
 public class ThemeViewHolder extends RecyclerView.ViewHolder {
 
-    View mView;
+    final View mView;
     ImageView mIcon;
     TextView mName;
 
     public ThemeViewHolder(ViewGroup parent) {
-        super(parent);
+        super(inflateView(parent));
 
         mView=itemView;
 
@@ -32,10 +32,10 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
         return inflater.inflate(R.layout.theme, parent,false);
 
     }
-    public void onBind(Integer themeIcon){
+    public void onBind(Integer themeIcon, String name){
 
         mIcon.setImageResource(themeIcon);
-        //mName.setText(themeName);
+        mName.setText(name);
 
     }
 

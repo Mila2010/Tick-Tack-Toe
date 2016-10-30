@@ -2,11 +2,14 @@ package com.example.tick_tack_toe;
 
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Millochka on 10/28/16.
@@ -17,7 +20,6 @@ public class ThemeAdapter extends RecyclerView.Adapter {
     private List<Integer> mThemeIcons=new ArrayList<>();
 
     public ThemeAdapter(){
-        super();
         initIntList();
         initList();
         notifyDataSetChanged();
@@ -69,12 +71,14 @@ public class ThemeAdapter extends RecyclerView.Adapter {
 
 
         ThemeViewHolder themeViewHolder=(ThemeViewHolder) holder;
-        themeViewHolder.onBind(mThemeIcons.get(position));
+        Log.d(TAG,mThemeIcons.get(position).toString() );
+        themeViewHolder.onBind(mThemeIcons.get(position),mThemeName.get(position));
+
 
     }
 
     @Override
     public int getItemCount() {
-        return mThemes.size();
+        return mThemeIcons.size();
     }
 }
