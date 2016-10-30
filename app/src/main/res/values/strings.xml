@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TIck_tack_toe</string>
+    <string name="c_d_prompt">Choose move</string>
+    <string-array name="c_d">
+        <item>Choose move</item>
+        <item>Cross</item>
+        <item>Zero</item>
+    </string-array>
+</resources>
