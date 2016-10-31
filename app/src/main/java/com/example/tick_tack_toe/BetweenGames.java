@@ -46,7 +46,7 @@ public class BetweenGames extends Fragment implements View.OnClickListener{
     public void setTransparancy(){
         mPlayAgain.getBackground().setAlpha(100);
         mExit.getBackground().setAlpha(100);
-        
+
 
     }
 
