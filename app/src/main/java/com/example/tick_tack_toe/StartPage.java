@@ -1,6 +1,7 @@
 package com.example.tick_tack_toe;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,14 +25,23 @@ public class StartPage extends AppCompatActivity implements ViewGroup.OnClickLis
     String mVPlayer2;
     Spinner mCrossZero1;
     Spinner mCrossZero2;
+    private static Drawable mFieldBackground;
     static Map<String,String> mMoveMap= new HashMap<>();
 
+    public static Drawable getmFieldBackground() {
+        return mFieldBackground;
+    }
 
 
+    public static void setmFieldBackground(Drawable mFieldBackground) {
+        StartPage.mFieldBackground = mFieldBackground;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+//        mFieldBackground= intent.getIntExtra(ThemeAdapter.DRAWABLE,0);
         setContentView(R.layout.activity_start_page);
         initialize();
         setOnClick();

@@ -32,6 +32,19 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
         return inflater.inflate(R.layout.theme, parent,false);
 
     }
+
+    public View getmView() {
+        return mView;
+    }
+
+    public ImageView getmIcon() {
+        return mIcon;
+    }
+
+    public TextView getmName() {
+        return mName;
+    }
+
     public void onBind(Integer themeIcon, String name){
 
         mIcon.setImageResource(themeIcon);

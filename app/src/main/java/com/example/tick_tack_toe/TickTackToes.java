@@ -22,7 +22,7 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
     Button mLowCent;
     Button mLowRig;
     boolean mCross=true;
-    int mClickCounter=0;
+    ViewGroup mBasicField;
 
     String [][] mMoveArray=new String[3][3];
 
@@ -32,13 +32,20 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
         super.onCreate(savedInstanceState);
 
         View view = inflater.inflate(R.layout.basic_play_field,container, false);
+
         initialize(view);
         setOnClick();
         initMoveArray();
 
+        mBasicField.setBackground(StartPage.getmFieldBackground());
+
+
+
+
         return view;}
 
     public void initialize(View view){
+        mBasicField=(ViewGroup) view.findViewById(R.id.basic_play);
         mUpLef=(Button) view.findViewById(R.id.upper_left);
         mUpCent=(Button)view.findViewById(R.id.upper_center);
         mUpRig=(Button) view.findViewById(R.id.upper_right);

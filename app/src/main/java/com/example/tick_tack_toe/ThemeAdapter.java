@@ -1,41 +1,28 @@
 package com.example.tick_tack_toe;
 
-import android.support.v4.util.ArrayMap;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Millochka on 10/28/16.
  */
-public class ThemeAdapter extends RecyclerView.Adapter {
+public class ThemeAdapter extends RecyclerView.Adapter implements ViewGroup.OnClickListener{
 
     private List<String> mThemeName=new ArrayList<>();
     private List<Integer> mThemeIcons=new ArrayList<>();
+   public static String DRAWABLE="ThemeAdapter";
 
     public ThemeAdapter(){
         initIntList();
         initList();
         notifyDataSetChanged();
-    }
-
-    private Map<String,Integer> mThemes= new ArrayMap<>();
-
-
-    public void initMap(){
-        mThemes.put("Beach",R.drawable.beach);
-        mThemes.put("Helloween",R.drawable.helloween);
-        mThemes.put("Forest",R.drawable.forest);
-        mThemes.put("Christmas",R.drawable.christmas);
-        mThemes.put("Universe",R.drawable.universe);
-        mThemes.put("Trump",R.drawable.trump);
-
     }
 
 
@@ -67,18 +54,42 @@ public class ThemeAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        //initMap();
 
 
-        ThemeViewHolder themeViewHolder=(ThemeViewHolder) holder;
-        Log.d(TAG,mThemeIcons.get(position).toString() );
-        themeViewHolder.onBind(mThemeIcons.get(position),mThemeName.get(position));
+
+         final ThemeViewHolder themeViewHolder=(ThemeViewHolder) holder;
+         themeViewHolder.getmIcon().setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Intent intent=new Intent(view.getContext(), StartPage.class);
+                 ImageView tempImageView=(ImageView) view;
+
+                 StartPage.setmFieldBackground(tempImageView.getDrawable());
+                 view.getContext().startActivity(intent);
+
+             }
+         });
+         themeViewHolder.onBind(mThemeIcons.get(position),mThemeName.get(position));
+
 
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return mThemeIcons.size();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        Toast.makeText(view.getContext(),"working",Toast.LENGTH_LONG);
+
+
+
+
+
     }
 }
