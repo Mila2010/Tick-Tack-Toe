@@ -36,8 +36,11 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
         initialize(view);
         setOnClick();
         initMoveArray();
-
+        if(StartPage.getmFieldBackground()!=null){
         mBasicField.setBackground(StartPage.getmFieldBackground());
+            setTransparancy();
+
+        }
 
 
 
@@ -55,6 +58,19 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
         mLowLef=(Button) view.findViewById(R.id.lower_left);
         mLowCent=(Button)view.findViewById(R.id.lower_center);
         mLowRig=(Button)view.findViewById(R.id.lower_right);
+
+    }
+
+    public void setTransparancy(){
+        mUpLef.getBackground().setAlpha(100);
+        mUpCent.getBackground().setAlpha(100);
+        mUpRig.getBackground().setAlpha(100);
+        mCent.getBackground().setAlpha(100);
+        mCenLef.getBackground().setAlpha(100);
+        mCentRig.getBackground().setAlpha(100);
+        mLowLef.getBackground().setAlpha(100);
+        mLowCent.getBackground().setAlpha(100);
+        mLowRig.getBackground().setAlpha(100);
 
     }
 

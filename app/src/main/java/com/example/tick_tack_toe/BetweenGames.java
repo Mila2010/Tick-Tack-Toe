@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 /**
  * Created by Millochka on 10/28/16.
@@ -17,6 +18,7 @@ public class BetweenGames extends Fragment implements View.OnClickListener{
     Button mPlayAgain;
     Button mExit;
     private Callback callback;
+    RelativeLayout relativeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,6 +28,11 @@ public class BetweenGames extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.between_games,container, false);
         initialize(view);
         setOnClick();
+        if(StartPage.getmFieldBackground()!=null){
+            relativeLayout.setBackground(StartPage.getmFieldBackground());
+            setTransparancy();
+
+        }
 
 //        initMoveArray();
 
@@ -36,10 +43,18 @@ public class BetweenGames extends Fragment implements View.OnClickListener{
         mExit.setOnClickListener(this);
     }
 
+    public void setTransparancy(){
+        mPlayAgain.getBackground().setAlpha(100);
+        mExit.getBackground().setAlpha(100);
+        
+
+    }
+
 
     private void initialize(View view){
         mPlayAgain=(Button)view.findViewById(R.id.yes);
         mExit=(Button)view.findViewById(R.id.no);
+        relativeLayout=(RelativeLayout) view.findViewById(R.id.between_games);
     }
 
     @Override
