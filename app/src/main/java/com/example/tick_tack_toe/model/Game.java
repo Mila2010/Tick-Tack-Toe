@@ -1,5 +1,8 @@
 package com.example.tick_tack_toe.model;
 
+import com.example.tick_tack_toe.dagger.FirstPlayer;
+import com.example.tick_tack_toe.dagger.SecondPlayer;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,10 +24,10 @@ public class Game {
     private Map<String,String> mMoveMap;
 
     @Inject
-    public Game(Player firstPlayer, Player secondPlayer){
+    public Game(@FirstPlayer Player firstPlayer, @SecondPlayer Player secondPlayer){
 
         this.mFirstPlayer=firstPlayer;
-        this.mFirstPlayer=secondPlayer;
+        this.mSecondPlayer=secondPlayer;
         mMoveMap=new HashMap<>();
 
     }

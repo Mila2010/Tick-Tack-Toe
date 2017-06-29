@@ -15,7 +15,7 @@ public class Player {
     private List<Game> mCurrentGames;
     private String mMove;
 
-    @Inject
+
     public Player(){
 
     }

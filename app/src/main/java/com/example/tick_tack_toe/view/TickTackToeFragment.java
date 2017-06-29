@@ -19,7 +19,7 @@ import javax.inject.Inject;
 /**
  * Created by Millochka on 10/24/16.
  */
-public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickListener{
+public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickListener, TickTackToeInterface{
     Button mUpLef;
     Button mUpCent;
     Button mUpRig;
@@ -35,7 +35,7 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
     @Inject
     TickTackToePresenter mTickTackToePresenter;
 
-    String [][] mMoveArray=new String[3][3];
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +46,8 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
         TickTackToeApp.getAppComponent().inject(this);
         initialize(view);
         setOnClick();
-        initMoveArray();
+        mTickTackToePresenter.setTickTackToeInterface(this);
+
         if(StartPageActivity.getmFieldBackground()!=null){
         mBasicField.setBackground(StartPageActivity.getmFieldBackground());
             setTransparancy();
@@ -97,137 +98,21 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
         mLowRig.setOnClickListener(this);
     }
 
-    public String[][] getmMoveArray(){
-
-        return mMoveArray;
-    }
-
-    public void fillMoveArray(String move, int id){
-
-        switch (id){
-
-            case R.id.upper_left:
-                mMoveArray[0][0]=move;
-
-                break;
-            case R.id.upper_right:
-                mMoveArray[0][2]=move;
-            break;
-            case R.id.upper_center:
-                mMoveArray[0][1]=move;
-            break;
-            case R.id.center_left:
-                mMoveArray[1][0]=move;
-                break;
-            case R.id.center:
-                mMoveArray[1][1]=move;
-            break;
-            case R.id.center_right:
-                mMoveArray[1][2]=move;
-            break;
-            case R.id.lower_left:
-                mMoveArray[2][0]=move;
-            break;
-            case R.id.lower_center:
-                mMoveArray[2][1]=move;
-            break;
-            case R.id.lower_right:
-                mMoveArray[2][2]=move;
-                break;
-
-
-        }
-
-    }
-
-    public String evaluateGame(View view){
-        int m=0;
-        int j=0;
-        int i=0;
-        int n=2;
-
-
-        for(int l=0;l<3;l++){
-
-                if(mMoveArray[l][j].equals(mMoveArray[l][j+1])&&mMoveArray[l][j+1].equals(mMoveArray[l][j+2])&&!mMoveArray[l][j].equals("*")){
-
-
-                    Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[l][j]) + " - Won",Toast.LENGTH_LONG).show();
-                    inflateBetweenGames();
-                    return null;
-
-                   }
-
-
-        }
-
-
-        for(int k=0;k<3;k++){
-
-                if(mMoveArray[i][k].equals(mMoveArray[i+1][k])&&mMoveArray[i+1][k].equals(mMoveArray[i+2][k])&&!mMoveArray[i][k].equals("*")){
-
-                    Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[i][k]) + " - Won",Toast.LENGTH_LONG).show();
-                    inflateBetweenGames();
-                    return null;
-
-
-        }
-        }
 
 
 
-            if(mMoveArray[m][m].equals(mMoveArray[m+1][m+1])&&mMoveArray[m+1][m+1].equals(mMoveArray[m+2][m+2])&&!mMoveArray[m][m].equals("*")){
-
-                Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[m][m]) + " - Won",Toast.LENGTH_LONG).show();
-                inflateBetweenGames();
-
-                return null;}
-
-        if(mMoveArray[n-2][n].equals(mMoveArray[n-1][n-1])&&mMoveArray[n-1][n-1].equals(mMoveArray[n][n-2])&&!mMoveArray[n-1][n-1].equals("*")){
-
-            Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[n-1][n-1]) + " - Won",Toast.LENGTH_LONG).show();
-            inflateBetweenGames();
-            return null;}
 
 
-            return null;
-
-
-    }
-
- public boolean isGameFinished(){
-
-
-     for(int i=0;i<3;i++){
-         for(int j=0;j<3;j++){
-             if (mMoveArray[i][j].equals("*")){
-
-                 return false;
-             }
-         }
-     }
-
-     return true;
-
- }
-    public void initMoveArray(){
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                mMoveArray[i][j]="*";
-
-
-            }
-        }
-    }
 
     public void processClick(int id, String move, View view){
 
         Button temptButton=(Button) view.findViewById(id);
         temptButton.setText(move);
-        fillMoveArray(move,id);
+
+        mTickTackToePresenter.fillMoveArray(move,id);
         mCross=!mCross;
 
-        evaluateGame(view);
+        mTickTackToePresenter.evaluateGame(view);
     }
 
     public void inflateBetweenGames(){
@@ -254,7 +139,7 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
 
                     processClick(currentButtonId,"X",view);
 
-                    if(isGameFinished()){
+                    if(mTickTackToePresenter.isGameFinished()){
 
                         inflateBetweenGames();
 
@@ -265,7 +150,7 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
 
 
                     processClick(currentButtonId,"O",view);
-                    if(isGameFinished()){
+                    if(mTickTackToePresenter.isGameFinished()){
 
                         inflateBetweenGames();
 
@@ -283,5 +168,13 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
 
     }
 
+    @Override
+    public void showWinner(String name) {
+
+        Toast.makeText(getActivity(), name + " - Won",Toast.LENGTH_LONG).show();
+
+        inflateBetweenGames();
+
+    }
 }
 

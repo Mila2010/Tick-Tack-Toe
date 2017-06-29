@@ -100,9 +100,9 @@ public class StartPageActivity extends AppCompatActivity implements ViewGroup.On
                 mStartPagePresenter.getmGame()
                         .getmFirstPlayer()
                         .setmName(mPlayer1.getText().toString());
-//                    mStartPagePresenter.getmGame()
-//                            .getmSecondPlayer()
-//                            .setmName(mPlayer2.getText().toString());
+                    mStartPagePresenter.getmGame()
+                            .getmSecondPlayer()
+                            .setmName(mPlayer2.getText().toString());
 
                     mStartPagePresenter.getmGame()
                             .setmMoveMap(mCrossZero1.getSelectedItem().toString(),mPlayer1.getText().toString());
