@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.tick_tack_toe.view.StartPageActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,10 +63,10 @@ public class ThemeAdapter extends RecyclerView.Adapter implements ViewGroup.OnCl
          themeViewHolder.getmIcon().setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 Intent intent=new Intent(view.getContext(), StartPage.class);
+                 Intent intent=new Intent(view.getContext(), StartPageActivity.class);
                  ImageView tempImageView=(ImageView) view;
 
-                 StartPage.setmFieldBackground(tempImageView.getDrawable());
+                 StartPageActivity.setmFieldBackground(tempImageView.getDrawable());
                  view.getContext().startActivity(intent);
 
              }

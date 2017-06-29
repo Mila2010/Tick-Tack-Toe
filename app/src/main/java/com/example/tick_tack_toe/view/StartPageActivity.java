@@ -1,9 +1,10 @@
-package com.example.tick_tack_toe;
+package com.example.tick_tack_toe.view;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -11,22 +12,38 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.tick_tack_toe.R;
+import com.example.tick_tack_toe.presenter.StartPagePresenter;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class StartPage extends AppCompatActivity implements ViewGroup.OnClickListener, BetweenGames.Callback {
+import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.example.tick_tack_toe.TickTackToeApp.getAppComponent;
+
+public class StartPageActivity extends AppCompatActivity implements ViewGroup.OnClickListener, BetweenGamesFragment.Callback {
+
+
+    @BindView(R.id.play)
     Button mPlay;
+    @BindView(R.id.player1)EditText mPlayer1;
+    @BindView(R.id.player2)EditText mPlayer2;
+    @BindView(R.id.spinner1)Spinner mCrossZero1;
+    @BindView(R.id.spinner2)Spinner mCrossZero2;
+    @BindView(R.id.theme_button)
     Button mThemes;
+    @Inject
+    StartPagePresenter mStartPagePresenter;
     private String TAG="com.example.tick_tack_toe";
-    EditText mPlayer1;
-    EditText mPlayer2;
+
     String mVPlayer1;
     String mVPlayer2;
-    Spinner mCrossZero1;
-    Spinner mCrossZero2;
     private static Drawable mFieldBackground;
-    static Map<String,String> mMoveMap= new HashMap<>();
+
 
     public static Drawable getmFieldBackground() {
         return mFieldBackground;
@@ -34,55 +51,33 @@ public class StartPage extends AppCompatActivity implements ViewGroup.OnClickLis
 
 
     public static void setmFieldBackground(Drawable mFieldBackground) {
-        StartPage.mFieldBackground = mFieldBackground;
+        StartPageActivity.mFieldBackground = mFieldBackground;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
+
+        getAppComponent().inject(this);
 //        mFieldBackground= intent.getIntExtra(ThemeAdapter.DRAWABLE,0);
         setContentView(R.layout.activity_start_page);
-        initialize();
+        ButterKnife.bind(this);
         setOnClick();
 
 
-    }
-
-    public void initialize(){
-        mPlay = (Button) findViewById(R.id.play);
-        mPlayer1=(EditText)findViewById(R.id.player1);
-        mPlayer2=(EditText)findViewById(R.id.player2);
-        mCrossZero1=(Spinner) findViewById(R.id.spinner1);
-        mCrossZero2=(Spinner)findViewById(R.id.spinner2);
-        mThemes=(Button)findViewById(R.id.theme_button);
 
     }
+
 
     public void setOnClick(){
         mPlay.setOnClickListener(this);
         mThemes.setOnClickListener(this);
     }
 
-    public static Map<String, String> getmMoveMap() {
-        return mMoveMap;
-    }
-
-    public void translateChoice(String choice, String player){
-
-        switch (choice.toLowerCase()){
-
-            case "cross":
-                mMoveMap.put("X",player);
-                break;
-            case "zero":
-                mMoveMap.put("O",player);
-                break;
 
 
-        }
 
-    }
 
     @Override
     public void onClick(View view) {
@@ -102,24 +97,31 @@ public class StartPage extends AppCompatActivity implements ViewGroup.OnClickLis
 
                 }
             else{
-                mVPlayer1=mPlayer1.getText().toString();
-                mVPlayer2=mPlayer2.getText().toString();
+                mStartPagePresenter.getmGame()
+                        .getmFirstPlayer()
+                        .setmName(mPlayer1.getText().toString());
+//                    mStartPagePresenter.getmGame()
+//                            .getmSecondPlayer()
+//                            .setmName(mPlayer2.getText().toString());
 
+                    mStartPagePresenter.getmGame()
+                            .setmMoveMap(mCrossZero1.getSelectedItem().toString(),mPlayer1.getText().toString());
+                    mStartPagePresenter.getmGame()
+                            .setmMoveMap(mCrossZero2.getSelectedItem().toString(),mPlayer2.getText().toString());
 
                 mPlayer1.setFocusable(false);
                 mPlayer2.setFocusable(false);
-                translateChoice(mCrossZero1.getSelectedItem().toString(),mPlayer1.getText().toString());
-                translateChoice(mCrossZero2.getSelectedItem().toString(),mPlayer2.getText().toString());
+
                 mCrossZero1.setEnabled(false);
                 mCrossZero2.setEnabled(false);
-                getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToes(),TAG)
+                getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToeFragment(),TAG)
                         .commit();}
 
 
                 break;
             case R.id.theme_button:
 
-                Intent intent=new Intent(this, Themes.class);
+                Intent intent=new Intent(this, ThemesActivity.class);
 
                 startActivity(intent);
 
@@ -134,6 +136,6 @@ public class StartPage extends AppCompatActivity implements ViewGroup.OnClickLis
     @Override
     public void onBack() {
 //        getFragmentManager().popBackStack();
-        getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToes(),TAG).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToeFragment(),TAG).addToBackStack(null).commit();
     }
 }

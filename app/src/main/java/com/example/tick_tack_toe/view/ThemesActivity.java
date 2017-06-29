@@ -1,11 +1,14 @@
-package com.example.tick_tack_toe;
+package com.example.tick_tack_toe.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-public class Themes extends AppCompatActivity {
+import com.example.tick_tack_toe.R;
+import com.example.tick_tack_toe.ThemeAdapter;
+
+public class ThemesActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

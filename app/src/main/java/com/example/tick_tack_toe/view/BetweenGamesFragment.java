@@ -1,4 +1,4 @@
-package com.example.tick_tack_toe;
+package com.example.tick_tack_toe.view;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.example.tick_tack_toe.R;
+
 /**
  * Created by Millochka on 10/28/16.
  */
 
-public class BetweenGames extends Fragment implements View.OnClickListener{
+public class BetweenGamesFragment extends Fragment implements View.OnClickListener{
 
     Button mPlayAgain;
     Button mExit;
@@ -28,8 +30,8 @@ public class BetweenGames extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.between_games,container, false);
         initialize(view);
         setOnClick();
-        if(StartPage.getmFieldBackground()!=null){
-            relativeLayout.setBackground(StartPage.getmFieldBackground());
+        if(StartPageActivity.getmFieldBackground()!=null){
+            relativeLayout.setBackground(StartPageActivity.getmFieldBackground());
             setTransparancy();
 
         }
@@ -62,12 +64,12 @@ public class BetweenGames extends Fragment implements View.OnClickListener{
 
         switch (view.getId()){
             case R.id.yes:
-//                getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToes(),TAG).addToBackStack(null).commit();
+//                getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToeFragment(),TAG).addToBackStack(null).commit();
 
                 callback.onBack();
                 break;
             case R.id.no:
-                Intent intent=new Intent(view.getContext(),StartPage.class);
+                Intent intent=new Intent(view.getContext(),StartPageActivity.class);
                 startActivity(intent);
                 break;
         }

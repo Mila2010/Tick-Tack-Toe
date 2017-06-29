@@ -1,4 +1,4 @@
-package com.example.tick_tack_toe;
+package com.example.tick_tack_toe.view;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,10 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.tick_tack_toe.R;
+import com.example.tick_tack_toe.TickTackToeApp;
+import com.example.tick_tack_toe.presenter.TickTackToePresenter;
+import com.example.tick_tack_toe.view.BetweenGamesFragment;
+import com.example.tick_tack_toe.view.StartPageActivity;
+
+import javax.inject.Inject;
+
 /**
  * Created by Millochka on 10/24/16.
  */
-public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
+public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickListener{
     Button mUpLef;
     Button mUpCent;
     Button mUpRig;
@@ -24,6 +32,9 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
     boolean mCross=true;
     ViewGroup mBasicField;
 
+    @Inject
+    TickTackToePresenter mTickTackToePresenter;
+
     String [][] mMoveArray=new String[3][3];
 
     @Override
@@ -32,12 +43,12 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
         super.onCreate(savedInstanceState);
 
         View view = inflater.inflate(R.layout.basic_play_field,container, false);
-
+        TickTackToeApp.getAppComponent().inject(this);
         initialize(view);
         setOnClick();
         initMoveArray();
-        if(StartPage.getmFieldBackground()!=null){
-        mBasicField.setBackground(StartPage.getmFieldBackground());
+        if(StartPageActivity.getmFieldBackground()!=null){
+        mBasicField.setBackground(StartPageActivity.getmFieldBackground());
             setTransparancy();
 
         }
@@ -140,8 +151,8 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
 
                 if(mMoveArray[l][j].equals(mMoveArray[l][j+1])&&mMoveArray[l][j+1].equals(mMoveArray[l][j+2])&&!mMoveArray[l][j].equals("*")){
 
-                    //StartPage.getmMoveMap().get(mMoveArray[l][j]);
-                    Toast.makeText(view.getContext(), StartPage.getmMoveMap().get(mMoveArray[l][j]) + " - Won",Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[l][j]) + " - Won",Toast.LENGTH_LONG).show();
                     inflateBetweenGames();
                     return null;
 
@@ -155,7 +166,7 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
 
                 if(mMoveArray[i][k].equals(mMoveArray[i+1][k])&&mMoveArray[i+1][k].equals(mMoveArray[i+2][k])&&!mMoveArray[i][k].equals("*")){
 
-                    Toast.makeText(view.getContext(), StartPage.getmMoveMap().get(mMoveArray[i][k]) + " - Won",Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[i][k]) + " - Won",Toast.LENGTH_LONG).show();
                     inflateBetweenGames();
                     return null;
 
@@ -167,14 +178,14 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
 
             if(mMoveArray[m][m].equals(mMoveArray[m+1][m+1])&&mMoveArray[m+1][m+1].equals(mMoveArray[m+2][m+2])&&!mMoveArray[m][m].equals("*")){
 
-                Toast.makeText(view.getContext(), StartPage.getmMoveMap().get(mMoveArray[m][m]) + " - Won",Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[m][m]) + " - Won",Toast.LENGTH_LONG).show();
                 inflateBetweenGames();
 
                 return null;}
 
         if(mMoveArray[n-2][n].equals(mMoveArray[n-1][n-1])&&mMoveArray[n-1][n-1].equals(mMoveArray[n][n-2])&&!mMoveArray[n-1][n-1].equals("*")){
 
-            Toast.makeText(view.getContext(), StartPage.getmMoveMap().get(mMoveArray[n-1][n-1]) + " - Won",Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), mTickTackToePresenter.getmGame().getmMoveMap().get(mMoveArray[n-1][n-1]) + " - Won",Toast.LENGTH_LONG).show();
             inflateBetweenGames();
             return null;}
 
@@ -205,9 +216,9 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
                 mMoveArray[i][j]="*";
 
 
-                }
             }
         }
+    }
 
     public void processClick(int id, String move, View view){
 
@@ -220,9 +231,9 @@ public class TickTackToes extends Fragment implements ViewGroup.OnClickListener{
     }
 
     public void inflateBetweenGames(){
-        BetweenGames betweenGames = new BetweenGames();
-        betweenGames.setCallback((BetweenGames.Callback) getActivity());
-        getChildFragmentManager().beginTransaction().add(R.id.basic_play, betweenGames).commit();
+        BetweenGamesFragment betweenGamesFragment = new BetweenGamesFragment();
+        betweenGamesFragment.setCallback((BetweenGamesFragment.Callback) getActivity());
+        getChildFragmentManager().beginTransaction().add(R.id.basic_play, betweenGamesFragment).commit();
 
     }
 
