@@ -12,10 +12,9 @@ public class GameBoard {
     private String[][] mMoveArray;
 
     @Inject
-public GameBoard(){
+   public GameBoard(){
 
         initMoveArray();
-
 
 }
 

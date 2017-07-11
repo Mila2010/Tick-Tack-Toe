@@ -12,22 +12,24 @@ import javax.inject.Singleton;
 /**
  * Created by mila on 6/20/17.
  */
-@Singleton
+
 public class Game {
 
     private Player mFirstPlayer;
     private Player mSecondPlayer;
     private Boolean mIsCompleted;
+
     private GameBoard mGameBoard;
     private String mFirstPlayerPlays;
     private String mSecondPlayerPlays;
     private Map<String,String> mMoveMap;
 
     @Inject
-    public Game(@FirstPlayer Player firstPlayer, @SecondPlayer Player secondPlayer){
+    public Game(@FirstPlayer Player firstPlayer, @SecondPlayer Player secondPlayer,GameBoard gameBoard){
 
         this.mFirstPlayer=firstPlayer;
         this.mSecondPlayer=secondPlayer;
+        this.mGameBoard=gameBoard;
         mMoveMap=new HashMap<>();
 
     }

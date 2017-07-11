@@ -64,7 +64,7 @@ public class BetweenGamesFragment extends Fragment implements View.OnClickListen
 
         switch (view.getId()){
             case R.id.yes:
-//                getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToeFragment(),TAG).addToBackStack(null).commit();
+              // getFragmentManager().beginTransaction().remove(this).commit();
 
                 callback.onBack();
                 break;

@@ -14,22 +14,16 @@ import javax.inject.Singleton;
 @Singleton
 public class StartPagePresenter {
 
-    private Game mGame;
+
 
     @Inject
-    public StartPagePresenter(Game game){
+    public StartPagePresenter( ){
 
-        this.mGame=game;
+
 
     }
 
-    public Game getmGame() {
-        return mGame;
-    }
 
-    public void setmGame(Game mGame) {
-        this.mGame = mGame;
-    }
 
 
 }

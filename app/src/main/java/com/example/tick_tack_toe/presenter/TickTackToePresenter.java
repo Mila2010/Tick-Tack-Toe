@@ -1,5 +1,6 @@
 package com.example.tick_tack_toe.presenter;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,17 +18,17 @@ import javax.inject.Singleton;
 /**
  * Created by mila on 6/20/17.
  */
-@Singleton
+
 public class TickTackToePresenter {
 
     private Game mGame;
-    private GameBoard mGameBoard;
+
     private TickTackToeInterface mTickTackToeInterface;
     @Inject
     public TickTackToePresenter(Game game,GameBoard gameBoard){
 
         this.mGame=game;
-        this.mGameBoard = gameBoard;
+
 
     }
 
@@ -40,32 +41,32 @@ public class TickTackToePresenter {
         switch (id){
 
             case R.id.upper_left:
-                mGameBoard.getmMoveArray()[0][0]=move;
+                mGame.getmGameBoard().getmMoveArray()[0][0]=move;
 
                 break;
             case R.id.upper_right:
-                mGameBoard.getmMoveArray()[0][2]=move;
+                mGame.getmGameBoard().getmMoveArray()[0][2]=move;
                 break;
             case R.id.upper_center:
-                mGameBoard.getmMoveArray()[0][1]=move;
+                mGame.getmGameBoard().getmMoveArray()[0][1]=move;
                 break;
             case R.id.center_left:
-                mGameBoard.getmMoveArray()[1][0]=move;
+                mGame.getmGameBoard().getmMoveArray()[1][0]=move;
                 break;
             case R.id.center:
-                mGameBoard.getmMoveArray()[1][1]=move;
+                mGame.getmGameBoard().getmMoveArray()[1][1]=move;
                 break;
             case R.id.center_right:
-                mGameBoard.getmMoveArray()[1][2]=move;
+                mGame.getmGameBoard().getmMoveArray()[1][2]=move;
                 break;
             case R.id.lower_left:
-                mGameBoard.getmMoveArray()[2][0]=move;
+                mGame.getmGameBoard().getmMoveArray()[2][0]=move;
                 break;
             case R.id.lower_center:
-                mGameBoard.getmMoveArray()[2][1]=move;
+                mGame.getmGameBoard().getmMoveArray()[2][1]=move;
                 break;
             case R.id.lower_right:
-                mGameBoard.getmMoveArray()[2][2]=move;
+                mGame.getmGameBoard().getmMoveArray()[2][2]=move;
                 break;
 
 
@@ -82,9 +83,9 @@ public class TickTackToePresenter {
 
         for(int l=0;l<3;l++){
 
-            if(mGameBoard.getmMoveArray()[l][j].equals(mGameBoard.getmMoveArray()[l][j+1])&&mGameBoard.getmMoveArray()[l][j+1].equals(mGameBoard.getmMoveArray()[l][j+2])&&!mGameBoard.getmMoveArray()[l][j].equals("*")){
+            if(mGame.getmGameBoard().getmMoveArray()[l][j].equals(mGame.getmGameBoard().getmMoveArray()[l][j+1])&&mGame.getmGameBoard().getmMoveArray()[l][j+1].equals(mGame.getmGameBoard().getmMoveArray()[l][j+2])&&!mGame.getmGameBoard().getmMoveArray()[l][j].equals("*")){
 
-               mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGameBoard.getmMoveArray()[l][j]));
+               mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGame.getmGameBoard().getmMoveArray()[l][j]));
 
 
                 return null;
@@ -97,8 +98,8 @@ public class TickTackToePresenter {
 
         for(int k=0;k<3;k++){
 
-            if(mGameBoard.getmMoveArray()[i][k].equals(mGameBoard.getmMoveArray()[i+1][k])&&mGameBoard.getmMoveArray()[i+1][k].equals(mGameBoard.getmMoveArray()[i+2][k])&&!mGameBoard.getmMoveArray()[i][k].equals("*")){
-                mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGameBoard.getmMoveArray()[i][k]));
+            if(mGame.getmGameBoard().getmMoveArray()[i][k].equals(mGame.getmGameBoard().getmMoveArray()[i+1][k])&&mGame.getmGameBoard().getmMoveArray()[i+1][k].equals(mGame.getmGameBoard().getmMoveArray()[i+2][k])&&!mGame.getmGameBoard().getmMoveArray()[i][k].equals("*")){
+                mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGame.getmGameBoard().getmMoveArray()[i][k]));
 
 
                 return null;
@@ -109,16 +110,21 @@ public class TickTackToePresenter {
 
 
 
-        if(mGameBoard.getmMoveArray()[m][m].equals(mGameBoard.getmMoveArray()[m+1][m+1])&&mGameBoard.getmMoveArray()[m+1][m+1].equals(mGameBoard.getmMoveArray()[m+2][m+2])&&!mGameBoard.getmMoveArray()[m][m].equals("*")){
+        if(mGame.getmGameBoard().getmMoveArray()[m][m].equals(mGame.getmGameBoard().getmMoveArray()[m+1][m+1])&&mGame.getmGameBoard().getmMoveArray()[m+1][m+1].equals(mGame.getmGameBoard().getmMoveArray()[m+2][m+2])&&!mGame.getmGameBoard().getmMoveArray()[m][m].equals("*")){
 
-            mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGameBoard.getmMoveArray()[m][m]));
+            mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGame.getmGameBoard().getmMoveArray()[m][m]));
+
+            Log.d("mGameAddress",mGame.toString());
+            Log.d("mGameBoardAddress",mGame.getmGameBoard().toString());
 
 
 
             return null;}
 
-        if(mGameBoard.getmMoveArray()[n-2][n].equals(mGameBoard.getmMoveArray()[n-1][n-1])&&mGameBoard.getmMoveArray()[n-1][n-1].equals(mGameBoard.getmMoveArray()[n][n-2])&&!mGameBoard.getmMoveArray()[n-1][n-1].equals("*")){
-            mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGameBoard.getmMoveArray()[n-1][n-1]));
+        if(mGame.getmGameBoard().getmMoveArray()[n-2][n].equals(mGame.getmGameBoard().getmMoveArray()[n-1][n-1])
+                &&mGame.getmGameBoard().getmMoveArray()[n-1][n-1].equals(mGame.getmGameBoard().getmMoveArray()[n][n-2])
+                &&!mGame.getmGameBoard().getmMoveArray()[n-1][n-1].equals("*")){
+            mTickTackToeInterface.showWinner(mGame.getmMoveMap().get(mGame.getmGameBoard().getmMoveArray()[n-1][n-1]));
 
 
             return null;}
@@ -138,7 +144,7 @@ public class TickTackToePresenter {
 
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                if (mGameBoard.getmMoveArray()[i][j].equals("*")){
+                if (mGame.getmGameBoard().getmMoveArray()[i][j].equals("*")){
 
                     return false;
                 }

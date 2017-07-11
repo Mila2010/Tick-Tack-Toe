@@ -31,6 +31,10 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
     Button mLowRig;
     boolean mCross=true;
     ViewGroup mBasicField;
+    private String mPlayerOne;
+    private String mPlayerTwo;
+    private String mPlayerOneMove;
+    private String mPlayerTwoMove;
 
     @Inject
     TickTackToePresenter mTickTackToePresenter;
@@ -47,6 +51,7 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
         initialize(view);
         setOnClick();
         mTickTackToePresenter.setTickTackToeInterface(this);
+        this.setGameValues(mPlayerOne,mPlayerTwo,mPlayerOneMove,mPlayerTwoMove);
 
         if(StartPageActivity.getmFieldBackground()!=null){
         mBasicField.setBackground(StartPageActivity.getmFieldBackground());
@@ -176,5 +181,40 @@ public class TickTackToeFragment extends Fragment implements ViewGroup.OnClickLi
         inflateBetweenGames();
 
     }
+
+
+    public void setGameValues(String firstPlayer, String secondPlayer,String firstPlayerMove, String secondPlayerMove){
+
+        mTickTackToePresenter.getmGame()
+                        .getmFirstPlayer()
+                        .setmName(firstPlayer);
+        mTickTackToePresenter.getmGame()
+                            .getmSecondPlayer()
+                            .setmName(secondPlayer);
+
+        mTickTackToePresenter.getmGame()
+                            .setmMoveMap(firstPlayerMove,firstPlayer);
+        mTickTackToePresenter.getmGame()
+                            .setmMoveMap(secondPlayerMove,secondPlayer);
+
+    }
+
+
+    public void setmPlayerOne(String mPlayerOne) {
+        this.mPlayerOne = mPlayerOne;
+    }
+
+    public void setmPlayerTwo(String mPlayerTwo) {
+        this.mPlayerTwo = mPlayerTwo;
+    }
+
+    public void setmPlayerOneMove(String mPlayerOneMove) {
+        this.mPlayerOneMove = mPlayerOneMove;
+    }
+
+    public void setmPlayerTwoMove(String mPlayerTwoMove) {
+        this.mPlayerTwoMove = mPlayerTwoMove;
+    }
 }
+
 

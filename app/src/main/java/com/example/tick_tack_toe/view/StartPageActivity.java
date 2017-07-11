@@ -39,6 +39,9 @@ public class StartPageActivity extends AppCompatActivity implements ViewGroup.On
     @Inject
     StartPagePresenter mStartPagePresenter;
     private String TAG="com.example.tick_tack_toe";
+    private TickTackToeFragment mTickTackToeFragment;
+
+
 
     String mVPlayer1;
     String mVPlayer2;
@@ -97,24 +100,16 @@ public class StartPageActivity extends AppCompatActivity implements ViewGroup.On
 
                 }
             else{
-                mStartPagePresenter.getmGame()
-                        .getmFirstPlayer()
-                        .setmName(mPlayer1.getText().toString());
-                    mStartPagePresenter.getmGame()
-                            .getmSecondPlayer()
-                            .setmName(mPlayer2.getText().toString());
 
-                    mStartPagePresenter.getmGame()
-                            .setmMoveMap(mCrossZero1.getSelectedItem().toString(),mPlayer1.getText().toString());
-                    mStartPagePresenter.getmGame()
-                            .setmMoveMap(mCrossZero2.getSelectedItem().toString(),mPlayer2.getText().toString());
+                setmTickTackToeFragment();
 
                 mPlayer1.setFocusable(false);
                 mPlayer2.setFocusable(false);
 
                 mCrossZero1.setEnabled(false);
                 mCrossZero2.setEnabled(false);
-                getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToeFragment(),TAG)
+
+                getFragmentManager().beginTransaction().replace(R.id.activity_start_page,mTickTackToeFragment,TAG)
                         .commit();}
 
 
@@ -136,6 +131,17 @@ public class StartPageActivity extends AppCompatActivity implements ViewGroup.On
     @Override
     public void onBack() {
 //        getFragmentManager().popBackStack();
-        getFragmentManager().beginTransaction().replace(R.id.activity_start_page,new TickTackToeFragment(),TAG).addToBackStack(null).commit();
+        setmTickTackToeFragment();
+
+        getFragmentManager().beginTransaction().replace(R.id.activity_start_page,mTickTackToeFragment,TAG).addToBackStack(null).commit();
+
+    }
+
+    public void setmTickTackToeFragment(){
+        mTickTackToeFragment= new TickTackToeFragment();
+        mTickTackToeFragment.setmPlayerOne(mPlayer1.getText().toString());
+        mTickTackToeFragment.setmPlayerTwo(mPlayer2.getText().toString());
+        mTickTackToeFragment.setmPlayerOneMove(mCrossZero1.getSelectedItem().toString());
+        mTickTackToeFragment.setmPlayerTwoMove(mCrossZero2.getSelectedItem().toString());
     }
 }
